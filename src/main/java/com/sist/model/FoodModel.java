@@ -80,7 +80,7 @@ public class FoodModel {
 			column = "address";
 		}
 		String ss = request.getParameter("ss"); // Search String
-		if(ss == null) {
+		if(ss == null || ss.equals("")) {
 			ss = "마포";
 		}
 		String[] types = request.getParameterValues("type");
@@ -122,6 +122,7 @@ public class FoodModel {
 				obj.put("startPage", startPage);
 				obj.put("endPage", endPage);
 				obj.put("count", count);
+				obj.put("ss", ss);
 			}
 			arr.add(obj);
 			i++;
