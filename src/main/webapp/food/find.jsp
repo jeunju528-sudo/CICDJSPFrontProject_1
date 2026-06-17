@@ -26,7 +26,42 @@ p {
 $(function(){
 	commons(1)
 	$('.btns').on('click',function(){
+		let types=[]
+		let count = $('input[name=type]:checked').length
+		if(count === 0){
+			alert("음식 종류를 체크하세요")
+			return
+		}
+		$('input[name=type]:checked').each(function(){
+			types.push($(this).val())
+		})
+		let ss = $('#ss').val()
+		console.log(ss)
+		if(ss.trim()===''){
+			$('#ss').focus()
+			return
+		}
+		let column = $('#column').val()
 		
+		$.ajax({
+			type:'post',
+			url:'../food/find_ajax.do',
+			data:{"ss":ss, "column":column, "type":types},
+			traditional:true, /* 배열 넣기위해 */
+			success:function(result){
+				//java에서 JSONArray를 toString으로 
+				let json = JSON.parse(result)
+				console.log(json)
+				
+				if(json.length === 0){          // 결과가 0건이면
+			        $('#print').html('<p>검색 결과가 없습니다.</p>')
+			        return                      // 여기서 멈춤 (json[0] 안 건드림)
+			    }
+				
+				$('#ss').val(json[0].ss)
+				jsonView(json)
+			}
+		})
 	})
 	
 })

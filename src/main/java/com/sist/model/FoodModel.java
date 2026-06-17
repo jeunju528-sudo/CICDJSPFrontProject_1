@@ -83,7 +83,9 @@ public class FoodModel {
 		if(ss == null || ss.equals("")) {
 			ss = "마포";
 		}
+		
 		String[] types = request.getParameterValues("type");
+		System.out.println("types:: " + java.util.Arrays.toString(types));
 		
 		int curPage = Integer.parseInt(page); // 현재 페이지
 		final int ROWSIZE = 12; // 한 페이지에 12개씩 데이터 보여줌
